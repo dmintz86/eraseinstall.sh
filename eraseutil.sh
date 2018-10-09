@@ -32,12 +32,10 @@
 #. This script is tested to work with High Sierra and Mojave		
 #  You must set $4 variable as the api username and $5 as the api password
 #	
-#	You shoyuld also set the jamfurl variable below. This should reflect your Jamf Pro server
+#	You should also use the $6 variable for the JSS url. 
 #
 ################################################################################################
 
-#Variable used in the api upload
-jamfurl=
 
 #Variables used in the Jamf helper portion of this script
 iconpath="/Library/build/"
@@ -205,8 +203,8 @@ EOF
 EOF
 
 ## Upload the xml file
-curl -sfku $4:$5 $jamfurl/JSSResource/computers/serialnumber/${serial} -T /private/tmp/ea.xml -X PUT
-curl -sfku $4:$5 $jamfurl/JSSResource/computers/serialnumber/${serial} -T /private/tmp/ea1.xml -X PUT
+curl -sfku $4:$5 $6/JSSResource/computers/serialnumber/${serial} -T /private/tmp/ea.xml -X PUT
+curl -sfku $4:$5 $6/JSSResource/computers/serialnumber/${serial} -T /private/tmp/ea1.xml -X PUT
 
 
 jamf recon -endUsername $tf
@@ -224,4 +222,5 @@ jamf policy -trigger erase
 /usr/local/bin/jamf killJAMFHelper
 
 jamf policy -trigger starterase
+
 
